@@ -27,5 +27,9 @@ Thumbs.db
 # Docker
 .dockerignore
 
+# SQLite
+backend/database.db
+*.db
+
 # Jenkins
 Jenkinsfile

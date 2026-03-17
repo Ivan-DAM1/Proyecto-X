@@ -1,10 +1,10 @@
 # Spring Security (configuración básica)
 
 ## Objetivo
-Se ha añadido Spring Security con **HTTP Basic** para proteger **solo** las peticiones **POST** y **PUT**.
+Se ha añadido Spring Security con **HTTP Basic** para proteger las peticiones **POST**, **PUT** y **DELETE**.
 
 - `GET` (y `OPTIONS` de CORS) queda público.
-- `POST` y `PUT` requieren usuario/contraseña.
+- `POST`, `PUT` y `DELETE` requieren usuario/contraseña.
 
 Esto es una configuración mínima pensada para desarrollo.
 
@@ -20,6 +20,7 @@ Esto es una configuración mínima pensada para desarrollo.
     - `GET /**` → permitido
     - `POST /**` → autenticado
     - `PUT /**` → autenticado
+    - `DELETE /**` → autenticado
 
 - Usuario en memoria (`InMemoryUserDetailsManager`) configurado por propiedades.
 
@@ -55,5 +56,5 @@ curl -i -u admin:admin \
 ```
 
 ## Notas / siguientes pasos
-- Ahora mismo `DELETE` sigue público (no se pidió protegerlo). Si quieres, lo protegemos también.
+- `DELETE` también está protegido.
 - Para producción, conviene mover credenciales a variables de entorno/secret manager y usar HTTPS.

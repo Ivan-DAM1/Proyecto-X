@@ -36,6 +36,9 @@ public class SecurityConfig {
                 // Preflight CORS
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
+                // Auth público
+                .requestMatchers("/api/auth/**").permitAll()
+
                 // Lecturas públicas
                 .requestMatchers(HttpMethod.GET, "/**").permitAll()
 

@@ -23,6 +23,10 @@ public class UserService {
     }
     
     public User createUser(User user) {
+        if (user.getId() == null) {
+            Long maxId = userRepository.findMaxId();
+            user.setId((maxId == null ? 0L : maxId) + 1L);
+        }
         return userRepository.save(user);
     }
     

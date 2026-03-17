@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:8081/api';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8081/api'
+    : 'https://proyecto-x-v1-0-0-backend.onrender.com/api';
 
 async function checkApiStatus() {
     const statusDiv = document.getElementById('api-status');

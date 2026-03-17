@@ -1,7 +1,11 @@
 (function () {
+  const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    ? 'http://localhost:8081/api'
+    : 'https://proyecto-x-v1-0-0-backend.onrender.com/api';
+
   async function fetchProduct(id) {
     try {
-      const res = await fetch(`http://localhost:8081/api/productos/${id}`);
+      const res = await fetch(`${API_URL}/productos/${id}`);
       return res.ok ? res.json() : null;
     } catch (error) {
       console.error('Error cargando producto:', error);

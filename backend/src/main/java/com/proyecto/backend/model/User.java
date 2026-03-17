@@ -1,5 +1,6 @@
 package com.proyecto.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 public class User {
     
     @Id // Es un id, hay una etiqueta para ello
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremento
     private Long id; 
     
     // Nombre de la columna dentro de la base de datos
@@ -28,6 +28,7 @@ public class User {
     private String direccion;
     
     @Column(name = "password_hash", length = 200)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String passwordHash;
     
     @Column(name = "created_at", updatable = false)
