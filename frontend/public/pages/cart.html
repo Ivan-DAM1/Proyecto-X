@@ -10,17 +10,7 @@
   </script>
 </head>
 <body class="bg-onyx text-smoke min-h-screen">
-  <nav class="fixed inset-x-0 top-0 z-20 bg-graphite/90 backdrop-blur border-b border-gold/20">
-    <div class="max-w-7xl mx-auto px-5">
-      <div class="flex items-center justify-between h-16">
-        <a href="/" class="text-2xl font-semibold tracking-[0.3em] text-gold">GoldenLine</a>
-        <div class="flex items-center gap-4 text-xs uppercase tracking-[0.3em]">
-          <a href="/" class="hover:text-gold transition">Inicio</a>
-          <a href="/pages/contact" class="hover:text-gold transition">Contacto</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <div id="site-header"></div>
 
   <main class="max-w-5xl mx-auto px-5 pt-24 pb-10">
     <div class="flex items-end justify-between gap-4 mb-6">
@@ -35,15 +25,26 @@
     <div id="cart-root" class="bg-graphite/70 border border-gold/15 rounded-3xl p-4 md:p-6"></div>
   </main>
 
-  <footer class="bg-graphite border-t border-gold/10">
-    <div class="max-w-7xl mx-auto px-5 py-8 flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-      <div class="text-xs text-smoke/50 uppercase tracking-[0.4em]">© 2025 GoldenLine</div>
-      <div class="text-xs uppercase tracking-[0.3em] text-smoke/60 flex gap-5">
-        <a href="/pages/contact" class="hover:text-gold transition">Contacto</a>
-        <a href="/pages/status" class="hover:text-gold transition">Status</a>
-      </div>
-    </div>
-  </footer>
+  <div id="site-footer"></div>
+
+  <script src="/js/components/site-header.js"></script>
+  <script src="/js/components/site-footer.js"></script>
+  <script>
+    window.SiteHeader?.mount({
+      variant: 'simple',
+      links: [
+        { href: '/', label: 'Inicio' },
+        { href: '/pages/contact', label: 'Contacto' },
+      ],
+    });
+    window.SiteFooter?.mount({
+      variant: 'simple',
+      links: [
+        { href: '/pages/contact', label: 'Contacto' },
+        { href: '/pages/status', label: 'Status' },
+      ],
+    });
+  </script>
 
   <script src="/js/cart.js"></script>
   <script src="/js/cart-ui.js"></script>

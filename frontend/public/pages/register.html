@@ -21,15 +21,7 @@
     </script>
 </head>
 <body class="bg-onyx text-smoke min-h-screen flex flex-col">
-    <nav class="bg-graphite/95 border-b border-gold/20">
-        <div class="max-w-4xl mx-auto px-5 h-16 flex items-center justify-between">
-            <a href="/" class="text-xl font-semibold tracking-[0.3em] text-gold">GoldenLine</a>
-            <div class="flex items-center gap-4 text-xs uppercase tracking-[0.3em]">
-                <a href="/" class="hover:text-gold transition">Inicio</a>
-                <a href="/pages/login" class="hover:text-gold transition">Login</a>
-            </div>
-        </div>
-    </nav>
+    <div id="site-header"></div>
 
     <main class="flex-1 flex items-center justify-center px-5 py-16">
         <div class="w-full max-w-2xl bg-graphite/80 border border-gold/20 rounded-3xl shadow-xl p-10 space-y-6">
@@ -38,18 +30,18 @@
                 <p class="text-sm text-smoke/60">Regístrate para acceder antes que nadie a lanzamientos exclusivos y beneficios GoldenLine.</p>
             </header>
 
-            <form class="grid gap-5 md:grid-cols-2" action="#" method="post">
+            <form class="grid gap-5 md:grid-cols-2" action="#" method="post" id="registerForm">
                 <label class="flex flex-col text-xs uppercase tracking-[0.3em] text-smoke/60">
-                    Nombre
-                    <input type="text" required placeholder="Nombre" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
+                    Nombre completo
+                    <input id="registerNombreCompleto" type="text" required placeholder="Nombre completo" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
                 </label>
                 <label class="flex flex-col text-xs uppercase tracking-[0.3em] text-smoke/60">
-                    Apellidos
-                    <input type="text" required placeholder="Apellidos" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
+                    Contraseña
+                    <input id="registerPassword" type="password" required placeholder="••••••••" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
                 </label>
                 <label class="flex flex-col text-xs uppercase tracking-[0.3em] text-smoke/60">
                     Email
-                    <input type="email" required placeholder="nombre@correo.com" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
+                    <input id="registerEmail" type="email" required placeholder="nombre@correo.com" class="mt-2 w-full px-4 py-3 bg-onyx border border-gold/20 rounded-xl text-sm text-smoke placeholder:text-smoke/40 focus:outline-none focus:border-gold">
                 </label>
                 <label class="flex flex-col text-xs uppercase tracking-[0.3em] text-smoke/60">
                     Teléfono
@@ -76,4 +68,39 @@
         </div>
     </main>
 </body>
+<script src="/js/services/api.js"></script>
+<script src="/js/components/site-header.js"></script>
+<script>
+    window.SiteHeader?.mount({
+        variant: 'auth',
+        links: [
+            { href: '/', label: 'Inicio' },
+            { href: '/pages/login', label: 'Login' },
+        ],
+    });
+
+    (function () {
+        const form = document.getElementById('registerForm');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombreCompleto = document.getElementById('registerNombreCompleto')?.value?.trim();
+            const email = document.getElementById('registerEmail')?.value?.trim();
+            const password = document.getElementById('registerPassword')?.value;
+
+            try {
+                const data = await apiService.fetchJson('/auth/register', {
+                    method: 'POST',
+                    body: JSON.stringify({ nombreCompleto, email, password })
+                });
+
+                window.location.href = '/pages/login';
+            } catch (err) {
+                // Sin alerts: evitamos mensajes del navegador
+            }
+        });
+    })();
+</script>
 </html>

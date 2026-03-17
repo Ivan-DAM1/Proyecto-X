@@ -1,6 +1,15 @@
+function resolveApiBaseUrl() {
+    const prodUrl = 'https://proyecto-x-v1-0-0-backend.onrender.com/api';
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+        return 'http://localhost:8081/api';
+    }
+    return prodUrl;
+}
+
 // Configuración de la API, a futuro en el .env
 const API_CONFIG = {
-    BASE_URL: 'https://proyecto-x-v1-0-0-backend.onrender.com/api',
+    BASE_URL: resolveApiBaseUrl(),
     ENDPOINTS: {
         PRODUCTOS: '/productos',
         USUARIOS: '/users',

@@ -21,15 +21,7 @@
     </script>
 </head>
 <body class="bg-onyx text-smoke min-h-screen flex flex-col">
-    <nav class="bg-graphite/95 border-b border-gold/20">
-        <div class="max-w-4xl mx-auto px-5 h-16 flex items-center justify-between">
-            <a href="/" class="text-xl font-semibold tracking-[0.3em] text-gold">GoldenLine</a>
-            <div class="flex items-center gap-4 text-xs uppercase tracking-[0.3em]">
-                <a href="/" class="hover:text-gold transition">Inicio</a>
-                <a href="/pages/register" class="hover:text-gold transition">Register</a>
-            </div>
-        </div>
-    </nav>
+    <div id="site-header"></div>
 
     <main class="flex-1 flex items-center justify-center px-5 py-16">
         <div class="w-full max-w-md bg-graphite/80 border border-gold/20 rounded-3xl shadow-xl p-8 space-y-6">
@@ -87,5 +79,40 @@
     </main>
 </body>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="/js/services/api.js"></script>
+<script src="/js/components/site-header.js"></script>
+<script>
+    window.SiteHeader?.mount({
+        variant: 'auth',
+        links: [
+            { href: '/', label: 'Inicio' },
+            { href: '/pages/register', label: 'Register' },
+        ],
+    });
+
+    (function () {
+        const form = document.getElementById('classicLoginForm');
+        if (!form) return;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail')?.value?.trim();
+            const password = document.getElementById('loginPassword')?.value;
+
+            try {
+                const user = await apiService.fetchJson('/auth/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password })
+                });
+
+                localStorage.setItem('authUser', JSON.stringify(user));
+                window.location.href = '/';
+            } catch (err) {
+                // Sin alerts: evitamos mensajes del navegador
+            }
+        });
+    })();
+</script>
 <script src="../js/google-login.js"></script>
 </html>
